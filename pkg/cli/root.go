@@ -19,6 +19,7 @@ import (
 	"github.com/nanobot-ai/nanobot/pkg/config"
 	"github.com/nanobot-ai/nanobot/pkg/llm"
 	"github.com/nanobot-ai/nanobot/pkg/llm/anthropic"
+	"github.com/nanobot-ai/nanobot/pkg/llm/deepseek"
 	"github.com/nanobot-ai/nanobot/pkg/llm/responses"
 	"github.com/nanobot-ai/nanobot/pkg/log"
 	"github.com/nanobot-ai/nanobot/pkg/mcp"
@@ -58,6 +59,9 @@ type Nanobot struct {
 	AnthropicAPIKey         string            `usage:"Anthropic API key" env:"ANTHROPIC_API_KEY" name:"anthropic-api-key"`
 	AnthropicBaseURL        string            `usage:"Anthropic API URL" env:"ANTHROPIC_BASE_URL" name:"anthropic-base-url"`
 	AnthropicHeaders        map[string]string `usage:"Anthropic API headers" env:"ANTHROPIC_HEADERS" name:"anthropic-headers"`
+	DeepSeekAPIKey          string            `usage:"DeepSeek API key" env:"DEEPSEEK_API_KEY" name:"deepseek-api-key"`
+	DeepSeekBaseURL         string            `usage:"DeepSeek API URL" env:"DEEPSEEK_BASE_URL" name:"deepseek-base-url"`
+	DeepSeekHeaders         map[string]string `usage:"DeepSeek API headers" env:"DEEPSEEK_HEADERS" name:"deepseek-headers"`
 	MaxConcurrency          int               `usage:"The maximum number of concurrent tasks in a parallel loop" default:"10" hidden:"true"`
 	Chdir                   string            `usage:"Change directory to this path before running the nanobot" default:"." short:"C"`
 	State                   string            `usage:"Path to the state file" default:"./nanobot.db"`
@@ -163,6 +167,11 @@ func (n *Nanobot) llmConfig() llm.Config {
 			APIKey:  n.AnthropicAPIKey,
 			BaseURL: n.AnthropicBaseURL,
 			Headers: n.AnthropicHeaders,
+		},
+		DeepSeek: deepseek.Config{
+			APIKey:  n.DeepSeekAPIKey,
+			BaseURL: n.DeepSeekBaseURL,
+			Headers: n.DeepSeekHeaders,
 		},
 	}
 }

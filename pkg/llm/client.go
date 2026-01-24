@@ -7,6 +7,7 @@ import (
 	"github.com/nanobot-ai/nanobot/pkg/complete"
 	"github.com/nanobot-ai/nanobot/pkg/llm/anthropic"
 	"github.com/nanobot-ai/nanobot/pkg/llm/completions"
+	"github.com/nanobot-ai/nanobot/pkg/llm/deepseek"
 	"github.com/nanobot-ai/nanobot/pkg/llm/progress"
 	"github.com/nanobot-ai/nanobot/pkg/llm/responses"
 	"github.com/nanobot-ai/nanobot/pkg/types"
@@ -18,6 +19,7 @@ type Config struct {
 	DefaultModel string
 	Responses    responses.Config
 	Anthropic    anthropic.Config
+	DeepSeek     deepseek.Config
 }
 
 func NewClient(cfg Config) *Client {
@@ -31,6 +33,7 @@ func NewClient(cfg Config) *Client {
 		}),
 		responses: responses.NewClient(cfg.Responses),
 		anthropic: anthropic.NewClient(cfg.Anthropic),
+		deepseek:  deepseek.NewClient(cfg.DeepSeek),
 	}
 }
 
@@ -40,6 +43,7 @@ type Client struct {
 	completions    *completions.Client
 	responses      *responses.Client
 	anthropic      *anthropic.Client
+	deepseek       *deepseek.Client
 }
 
 func (c Client) Complete(ctx context.Context, req types.CompletionRequest, opts ...types.CompletionOptions) (ret *types.CompletionResponse, _ error) {
@@ -69,6 +73,9 @@ func (c Client) Complete(ctx context.Context, req types.CompletionRequest, opts 
 
 	if strings.HasPrefix(req.Model, "claude") {
 		return c.anthropic.Complete(ctx, req, opts...)
+	}
+	if strings.HasPrefix(req.Model, "deepseek") {
+		return c.deepseek.Complete(ctx, req, opts...)
 	}
 	if c.useCompletions {
 		return c.completions.Complete(ctx, req, opts...)

@@ -1,0 +1,9 @@
+# DeepSeek 示例配置
+
+agents:
+  deepseek-agent:
+    name: DeepSeek Assistant
+    model: deepseek-chat
+    instructions: You are a helpful AI assistant powered by DeepSeek.
+
+mcpServers: {}

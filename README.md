@@ -46,6 +46,7 @@ Nanobot supports the following providers:
 
 - **OpenAI** (e.g. `gpt-4`)
 - **Anthropic** (e.g. `claude-3`)
+- **DeepSeek** (e.g. `deepseek-chat`)
 
 To use them, set the corresponding API key:
 
@@ -55,6 +56,9 @@ export OPENAI_API_KEY=sk-...
 
 # For Anthropic models
 export ANTHROPIC_API_KEY=sk-ant-...
+
+# For DeepSeek models
+export DEEPSEEK_API_KEY=sk-...
 ```
 
 Nanobot automatically selects the correct provider based on the model specified.
